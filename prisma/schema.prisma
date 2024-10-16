@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  userid   String     @id @default(uuid())
+  name     String
+  username String
+  email    String
+  password String
+  role     String     @default("STAFF")
+  qrtoken  String
+  Articles Articles[]
+  Dapa     Dapa[]
+  Mailboxs Mailboxs[]
+
+  @@map("users")
+}
+
+model Mailboxs {
+  mailid      Int      @id @default(autoincrement())
+  userid      String
+  sender_name String
+  contact     String
+  description String
+  date        DateTime @default(now())
+  users       Users    @relation(fields: [userid], references: [userid])
+
+  @@map("mailboxs")
+}
+
+model Dapa {
+  dapaid   Int    @id @default(autoincrement())
+  userid   String
+  AMONIA   Float
+  BOD      Float
+  COD      Float
+  DO       Float
+  NITRAT   Float
+  PH       Float
+  TDS      Float
+  TSS      Float
+  IP       Float
+  critical String
+  date     String
+
+  users Users @relation(fields: [userid], references: [userid])
+
+  @@map("dapa")
+}
+
+model Articles {
+  articleid   Int        @id @default(autoincrement())
+  userid      String
+  image       String
+  title       String
+  description String
+  author      String
+  date        DateTime   @default(now())
+  users       Users      @relation(fields: [userid], references: [userid])
+  Comments    Comments[]
+
+  @@map("articles")
+}
+
+model Comments {
+  commentid   Int      @id @default(autoincrement())
+  articleid   Int
+  name        String
+  email       String
+  description String
+  date        DateTime @default(now())
+  articles    Articles @relation(fields: [articleid], references: [articleid])
+
+  @@map("comments")
+}
