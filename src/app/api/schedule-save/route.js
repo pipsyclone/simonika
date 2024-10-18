@@ -38,7 +38,7 @@ export async function GET() {
 				if (item.IDStasiun === "KLHK250") {
 					await prisma.dapa.create({
 						data: {
-							userid: "1892491d-10e4-493d-8e90-a1457f5660af",
+							userid: "64f67646-9af1-41dc-bf1d-417f0fe174fe",
 							AMONIA: item.result.avg.Amonia,
 							BOD: item.result.avg.BOD,
 							COD: item.result.avg.COD,
