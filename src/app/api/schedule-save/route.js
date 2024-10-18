@@ -38,7 +38,7 @@ export async function GET() {
 				if (item.IDStasiun === "KLHK250") {
 					await prisma.dapa.create({
 						data: {
-							userid: "93939153-916d-48cd-a51e-e1920d1a4d74",
+							userid: "1892491d-10e4-493d-8e90-a1457f5660af",
 							AMONIA: item.result.avg.Amonia,
 							BOD: item.result.avg.BOD,
 							COD: item.result.avg.COD,
@@ -52,8 +52,6 @@ export async function GET() {
 							date: item.tgl_data,
 						},
 					});
-
-					return item;
 				}
 			}
 		}
