@@ -1,8 +1,8 @@
-import cheerio from "cheerio";
+import * as cheerio from "cheerio";
 import { NextResponse } from "next/server";
-import cron from "node-cron";
+import prisma from "@/libs/prisma";
 
-async function ScrapeAndSave() {
+export async function GET() {
 	try {
 		const response = await fetch("https://ppkl.menlhk.go.id/onlimo-2022/", {
 			cache: "no-store",
@@ -52,28 +52,14 @@ async function ScrapeAndSave() {
 							date: item.tgl_data,
 						},
 					});
+
+					return item;
 				}
 			}
 		}
 
-		return dataMap;
+		return NextResponse.json({ status: 200, message: "Data Saved!" });
 	} catch (err) {
-		return err.message;
+		return NextResponse.json({ status: 200, message: err.message });
 	}
-}
-
-// Jadwalkan untuk menyimpan data setiap hari jam 08.00 WIB (01:00 UTC)
-cron.schedule(
-	"0 1 * * *", // 01.00 UTC = 08.00 WIB, * * * * * = run per minute
-	async () => {
-		console.log("Running scheduled task at:", new Date());
-		await ScrapeAndSave();
-	},
-	{
-		timezone: "Asia/Jakarta", // Set timezone ke WIB
-	}
-);
-
-export async function GET() {
-	return NextResponse.json({ status: 200, message: "Cron is running!" });
 }
