@@ -2,7 +2,7 @@ import * as cheerio from "cheerio";
 import { NextResponse } from "next/server";
 import prisma from "@/libs/prisma";
 
-export async function GET() {
+export async function GET(request) {
 	try {
 		const response = await fetch("https://ppkl.menlhk.go.id/onlimo-2022/", {
 			cache: "no-store",
