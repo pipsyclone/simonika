@@ -33,13 +33,6 @@ export async function GET(request) {
 			}
 		});
 
-		// const authHeader = request.headers.get("authorization");
-		// if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
-		// 	return new Response("Unauthorized", {
-		// 		status: 401,
-		// 	});
-		// }
-
 		if (dataMap) {
 			for (const item of dataMap) {
 				if (item.IDStasiun === "KLHK250") {
@@ -63,6 +56,7 @@ export async function GET(request) {
 			}
 		}
 
+		console.log("Cron Job Run at : " + new Date());
 		return NextResponse.json({ status: 200, message: "Data Saved!" });
 	} catch (err) {
 		return NextResponse.json({ status: 200, message: err.message });
