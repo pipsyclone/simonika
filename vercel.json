@@ -2,7 +2,7 @@
 	"crons": [
 		{
 			"path": "/api/schedule-save",
-			"schedule": "*/5 * * * *"
+			"schedule": "0 0 * * *"
 		}
 	]
 }
