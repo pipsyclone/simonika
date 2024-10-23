@@ -31,3 +31,26 @@
 	color: #fff;
 	font-size: 40pt;
 }
+
+/* Styling untuk plang satu kaki */
+.custom-plang-icon {
+	position: relative;
+	color: white;
+	font-weight: bold;
+	width: 40px; /* Lebar plang */
+	height: 20px; /* Tinggi plang */
+	padding-top: 2px;
+	text-align: center;
+	border-radius: 5px; /* Membuat sudut rounded */
+}
+/* Kaki plang */
+.custom-plang-icon::after {
+	content: "";
+	position: absolute;
+	bottom: -10px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 2px; /* Lebar kaki yang tipis */
+	height: 15px; /* Tinggi kaki plang */
+	background-color: #555; /* Warna kaki plang */
+}

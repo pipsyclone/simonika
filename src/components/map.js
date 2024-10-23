@@ -20,30 +20,8 @@ import Warning from "./warning";
 
 const Map = () => {
 	const [data, setData] = useState([]);
-
-	const goodWaterMarker = new L.Icon({
-		iconUrl: "/good-water-marker.png", // Path ke gambar marker custom
-		iconSize: [32, 32], // Ukuran marker custom
-		iconAnchor: [32 / 2, 32], // Anchor dari marker custom
-	});
-
-	const pollutedWaterMarker = new L.Icon({
-		iconUrl: "/polluted-water-marker.png", // Path ke gambar marker custom
-		iconSize: [25, 32], // Ukuran marker custom
-		iconAnchor: [32 / 2, 32], // Anchor dari marker custom
-	});
-
-	const lightlyPollutedWater = new L.Icon({
-		iconUrl: "/lightly-polluted-water-marker.png", // Path ke gambar marker custom
-		iconSize: [25, 32], // Ukuran marker custom
-		iconAnchor: [32 / 2, 32], // Anchor dari marker custom
-	});
-
-	const heavilyPollutedWaterMarker = new L.Icon({
-		iconUrl: "/heavily-polluted-water-marker.png", // Path ke gambar marker custom
-		iconSize: [25, 32], // Ukuran marker custom
-		iconAnchor: [32 / 2, 32], // Anchor dari marker custom
-	});
+	const iconsize = [50, 20]; // Ukuran marker
+	const iconanchor = [50 / 2, 20]; // Kaki marker
 
 	const noDataMarker = new L.Icon({
 		iconUrl: "/no-data-marker.png", // Path ke gambar marker custom
@@ -83,7 +61,15 @@ const Map = () => {
 						return (
 							<Marker
 								position={[dataMap?.latitude, dataMap?.longitude]}
-								icon={goodWaterMarker}
+								icon={
+									new L.DivIcon({
+										iconUrl: "/normal.png", // Path ke gambar marker custom
+										iconSize: iconsize,
+										iconAnchor: iconanchor,
+										className: "custom-plang-icon bg-success",
+										html: "<p>" + dataMap.result.ip + "</p>",
+									})
+								}
 								key={key}
 							>
 								<Tooltip>
@@ -117,7 +103,15 @@ const Map = () => {
 						return (
 							<Marker
 								position={[dataMap?.latitude, dataMap?.longitude]}
-								icon={pollutedWaterMarker}
+								icon={
+									new L.DivIcon({
+										iconUrl: "/normal.png", // Path ke gambar marker custom
+										iconSize: iconsize,
+										iconAnchor: iconanchor,
+										className: "custom-plang-icon bg-info",
+										html: "<p>" + dataMap.result.ip + "</p>",
+									})
+								}
 								key={key}
 							>
 								<Tooltip>
@@ -151,7 +145,15 @@ const Map = () => {
 						return (
 							<Marker
 								position={[dataMap?.latitude, dataMap?.longitude]}
-								icon={lightlyPollutedWater}
+								icon={
+									new L.DivIcon({
+										iconUrl: "/normal.png", // Path ke gambar marker custom
+										iconSize: iconsize,
+										iconAnchor: iconanchor,
+										className: "custom-plang-icon bg-warning",
+										html: "<p>" + dataMap.result.ip + "</p>",
+									})
+								}
 								key={key}
 							>
 								<Tooltip>
@@ -185,7 +187,15 @@ const Map = () => {
 						return (
 							<Marker
 								position={[dataMap?.latitude, dataMap?.longitude]}
-								icon={heavilyPollutedWaterMarker}
+								icon={
+									new L.DivIcon({
+										iconUrl: "/normal.png", // Path ke gambar marker custom
+										iconSize: iconsize,
+										iconAnchor: iconanchor,
+										className: "custom-plang-icon bg-danger",
+										html: "<p>" + dataMap.result.ip + "</p>",
+									})
+								}
 								key={key}
 							>
 								<Tooltip>

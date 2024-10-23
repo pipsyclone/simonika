@@ -2,7 +2,7 @@ import * as cheerio from "cheerio";
 import { NextResponse } from "next/server";
 import prisma from "@/libs/prisma";
 
-export async function GET(request) {
+export async function GET() {
 	try {
 		const response = await fetch("https://ppkl.menlhk.go.id/onlimo-2022/", {
 			cache: "no-store",
@@ -33,20 +33,25 @@ export async function GET(request) {
 			}
 		});
 
+		// if (request.headers.get('Authorization') !== `Bearer ${process.env.CRON_SECRET}`) {
+		// 	return res.status(401).end('Unauthorized');
+		//   }
+
 		if (dataMap) {
 			for (const item of dataMap) {
 				if (item.IDStasiun === "KLHK250") {
 					await prisma.dapa.create({
 						data: {
-							userid: "64f67646-9af1-41dc-bf1d-417f0fe174fe",
-							AMONIA: item.result.avg.Amonia,
-							BOD: item.result.avg.BOD,
-							COD: item.result.avg.COD,
-							DO: item.result.avg.DO,
-							NITRAT: item.result.avg.Nitrat,
-							PH: item.result.avg.PH,
-							TDS: item.result.avg.DO,
-							TSS: item.result.avg.DO,
+							// userid: "4df80e04-04d0-422e-9c7c-818f920fd3be", // dev
+							userid: "64f67646-9af1-41dc-bf1d-417f0fe174fe", // prod
+							AMONIA: item?.result?.avg?.Amonia ? item.result.avg.Amonia : 0,
+							BOD: item?.result?.avg?.BOD ? item.result.avg.BOD : 0,
+							COD: item?.result?.avg?.COD ? item.result.avg.COD : 0,
+							DO: item?.result?.avg?.DO ? item.result.avg.DO : 0,
+							NITRAT: item?.result?.avg?.Nitrat ? item.result.avg.Nitrat : 0,
+							PH: item?.result?.avg?.PH ? item.result.avg.PH : 0,
+							TDS: item?.result?.avg?.TDS ? item.result.avg.TDS : 0,
+							TSS: item?.result?.avg?.TSS ? item.result.avg.TSS : 0,
 							IP: item.result.ip,
 							critical: item.result.kritis,
 							date: item.tgl_data,
@@ -56,8 +61,11 @@ export async function GET(request) {
 			}
 		}
 
-		console.log("Cron Job Run at : " + new Date());
-		return NextResponse.json({ status: 200, message: "Data Saved!" });
+		console.log("Cron Job Run at : " + new Date() + ", Data Saved!");
+		return NextResponse.json({
+			status: 200,
+			message: "Data Saved!",
+		});
 	} catch (err) {
 		return NextResponse.json({ status: 200, message: err.message });
 	}
